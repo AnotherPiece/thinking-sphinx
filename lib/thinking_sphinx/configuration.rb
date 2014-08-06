@@ -1,7 +1,7 @@
 require 'pathname'
 
 class ThinkingSphinx::Configuration < Riddle::Configuration
-  attr_accessor :configuration_file, :indices_location, :version
+  attr_accessor :configuration_file, :indices_location, :tmp_indices_location, :version
   attr_reader :index_paths
   attr_writer :controller
 

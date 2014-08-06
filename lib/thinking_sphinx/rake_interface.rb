@@ -1,7 +1,7 @@
 class ThinkingSphinx::RakeInterface
   def clear
     [
-      configuration.tmp_indices_location,
+      configuration.indices_location,
       configuration.searchd.binlog_path
     ].each do |path|
       FileUtils.rm_r(path) if File.exists?(path)
