@@ -146,6 +146,9 @@ class ThinkingSphinx::Configuration < Riddle::Configuration
       'config', "#{environment}.sphinx.conf"
     ).to_s
     @index_paths = engine_index_paths + [framework_root.join('app', 'indices').to_s]
+    @tmp_indices_location = settings['tmp_indices_location'] || framework_root.join(
+      'db', 'tmp_sphinx', environment
+    ).to_s
     @indices_location = settings['indices_location'] || framework_root.join(
       'db', 'sphinx', environment
     ).to_s

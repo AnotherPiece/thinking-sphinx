@@ -1,7 +1,7 @@
 class ThinkingSphinx::RakeInterface
   def clear
     [
-      configuration.indices_location,
+      configuration.tmp_indices_location,
       configuration.searchd.binlog_path
     ].each do |path|
       FileUtils.rm_r(path) if File.exists?(path)
@@ -22,7 +22,7 @@ class ThinkingSphinx::RakeInterface
 
   def index(reconfigure = true, verbose = true)
     configure if reconfigure
-    FileUtils.mkdir_p configuration.indices_location
+    FileUtils.mkdir_p configuration.tmp_indices_location
     ThinkingSphinx.before_index_hooks.each { |hook| hook.call }
     controller.index :verbose => verbose
   end
@@ -31,13 +31,13 @@ class ThinkingSphinx::RakeInterface
     configuration.preload_indices
     configuration.render
 
-    FileUtils.mkdir_p configuration.indices_location
+    FileUtils.mkdir_p configuration.tmp_indices_location
   end
 
   def start
     raise RuntimeError, 'searchd is already running' if controller.running?
 
-    FileUtils.mkdir_p configuration.indices_location
+    FileUtils.mkdir_p configuration.tmp_indices_location
     controller.start
 
     if controller.running?
@@ -58,6 +58,11 @@ class ThinkingSphinx::RakeInterface
     end
 
     puts "Stopped searchd daemon (pid: #{pid})."
+  end
+  
+  def replace
+    # replace from tmp_indices_location to indices_location
+    FileUtils.mv("#{configuration.tmp_indices_location}/*.*", configuration.indices_location, force: true, verbose: true)
   end
 
   private
