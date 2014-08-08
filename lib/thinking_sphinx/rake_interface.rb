@@ -2,7 +2,7 @@ class ThinkingSphinx::RakeInterface
   def clear
     [
       configuration.indices_location,
-      configuration.searchd.binlog_path
+      # configuration.searchd.binlog_path
     ].each do |path|
       FileUtils.rm_r(path) if File.exists?(path)
     end
@@ -65,7 +65,7 @@ class ThinkingSphinx::RakeInterface
   
   def replace
     # replace from tmp_indices_location to indices_location
-    FileUtils.mv("#{configuration.tmp_indices_location}/*.*", configuration.indices_location, force: true, verbose: true)
+    FileUtils.mv(configuration.tmp_indices_location, configuration.indices_location, force: true, verbose: true)
   end
 
   private
