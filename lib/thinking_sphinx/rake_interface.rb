@@ -23,6 +23,7 @@ class ThinkingSphinx::RakeInterface
   def index(reconfigure = true, verbose = true)
     configure if reconfigure
     FileUtils.mkdir_p configuration.tmp_indices_location
+    FileUtils.mkdir_p configuration.indices_location
     ThinkingSphinx.before_index_hooks.each { |hook| hook.call }
     controller.index :verbose => verbose
   end
@@ -32,12 +33,14 @@ class ThinkingSphinx::RakeInterface
     configuration.render
 
     FileUtils.mkdir_p configuration.tmp_indices_location
+    FileUtils.mkdir_p configuration.indices_location
   end
 
   def start
     raise RuntimeError, 'searchd is already running' if controller.running?
 
     FileUtils.mkdir_p configuration.tmp_indices_location
+    FileUtils.mkdir_p configuration.indices_location
     controller.start
 
     if controller.running?
