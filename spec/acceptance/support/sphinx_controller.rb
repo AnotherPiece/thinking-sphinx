@@ -4,7 +4,7 @@ class SphinxController
   end
 
   def setup
-    FileUtils.mkdir_p config.indices_location
+    FileUtils.mkdir_p config.tmp_indices_location
     config.controller.bin_path = ENV['SPHINX_BIN'] || ''
     config.render_to_file && index
 

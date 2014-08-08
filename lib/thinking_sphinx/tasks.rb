@@ -22,9 +22,15 @@ namespace :ts do
     interface.prepare
     interface.generate
   end
+  
+  desc "Replace old index with new ones "
+  task :replace => :environment do
+    interface.clear
+    interface.replace
+  end
 
   desc 'Stop Sphinx, index and then restart Sphinx'
-  task :rebuild => [:stop, :index, :start]
+  task :rebuild => [:index, :replace, :stop, :start]
 
   desc 'Stop Sphinx, clear files, reconfigure, start Sphinx, generate files'
   task :regenerate => [:stop, :clear, :configure, :start, :generate]

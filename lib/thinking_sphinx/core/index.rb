@@ -76,6 +76,6 @@ module ThinkingSphinx::Core::Index
   end
 
   def set_path
-    @path ||= File.join config.indices_location, name
+    @path ||= File.join config.tmp_indices_location, name
   end
 end

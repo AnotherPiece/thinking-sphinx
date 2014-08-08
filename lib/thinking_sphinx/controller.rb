@@ -13,7 +13,7 @@ class ThinkingSphinx::Controller < Riddle::Controller
 
   def guard_file(index)
     File.join(
-      ThinkingSphinx::Configuration.instance.indices_location,
+      ThinkingSphinx::Configuration.instance.tmp_indices_location,
       "ts-#{index}.tmp"
     )
   end
